@@ -24,7 +24,4 @@ for x in range(3):
 
 sleep(3)
 
-
-
-
 driver.quit()

@@ -21,6 +21,4 @@ for x in range(5):
 amount = driver.find_elements(By.CSS_SELECTOR, ".added-manually")
 
 print (len(amount))
-
-
 sleep (3)

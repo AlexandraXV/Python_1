@@ -25,5 +25,4 @@ sleep(2)
 
 driver.find_element(By.XPATH, '//*[@id="login"]/button').click()
 
-
-sleep(5)
+sleep(3)
