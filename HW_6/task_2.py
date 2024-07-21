@@ -17,4 +17,4 @@ button.click()
 
 print(button.text)
 
-driver.quit
+driver.quit()

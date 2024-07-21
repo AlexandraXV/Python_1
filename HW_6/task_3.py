@@ -19,4 +19,4 @@ src = driver.find_element(By.CSS_SELECTOR, "#award").get_attribute("src")
 
 print(src)
 
-driver.quit
+driver.quit()
