@@ -2,13 +2,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
 
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
-
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+driver = webdriver.Chrome()
 driver.maximize_window()
 
 def test_data_farm():
+    driver.implicitly_wait(10)
     driver.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")
 
     first_name = driver.find_element(By.CSS_SELECTOR, 'input[name="first-name"]')
@@ -40,7 +38,6 @@ def test_data_farm():
     sleep(3)
     
     driver.find_element(By.CSS_SELECTOR, ".btn.btn-outline-primary.mt-3").click()
-    
     assert "danger" in driver.find_element(By.CSS_SELECTOR, ".alert.py-2.alert-danger").get_attribute("class")
     assert "success" in driver.find_element(By.CSS_SELECTOR, ".alert.py-2.alert-success").get_attribute("class")
 
