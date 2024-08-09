@@ -42,7 +42,8 @@ class ShopPage:
     def wait(self):
         wait_txt = WebDriverWait(self.driver, 10)
         assert wait_txt.until(
-            EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".summary_total_label"), "$58.29"))
+            EC.text_to_be_present_in_element(
+                (By.CSS_SELECTOR, ".summary_total_label"), "$58.29"))
 
         total = self.driver.find_element(
             By.CSS_SELECTOR, ".summary_total_label").text

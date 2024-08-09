@@ -10,7 +10,8 @@ class InfoPage:
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
 
-    def test_data_farm(self, first_name, last_name, adress, email, phone, city, country, job_position, company):
+    def test_data_farm(self, first_name, last_name,
+                       adress, email, phone, city, country, job_position, company):
         self.driver.find_element(
             By.CSS_SELECTOR, 'input[name="first-name"]').send_keys(first_name)
         self.driver.find_element(

@@ -30,9 +30,3 @@ class CalculatorPage:
         element = (By.CLASS_NAME, 'screen')
         condition = EC.text_to_be_present_in_element(element, total)
         assert wait_txt.until(condition)
-
-
-        # ПОЧЕМУ НЕ РАБОТАЕТ С ЭТИМ СИНТАКСИСОМ, НО РАБОТАЕТ С ТЕМ, ЧТО ВЫШЕ?
-        # assert wait_txt.until(
-        #     EC.text_to_be_present_in_element((By.CSS_SELECTOR, "screen"), total)
-        #     )
