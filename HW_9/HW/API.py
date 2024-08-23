@@ -1,23 +1,11 @@
 import requests
 
-body = {
-    "id": 0,
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "companyId": 0,
-    "email": "string",
-    "url": "string",
-    "phone": "string",
-    "birthdate": "2024-08-22T14:05:53.814Z",
-    "isActive": True
-}
-
 
 class API:
     def __init__(self, url):
         self.url = url
 
+    # получить токен
     def api_get_token(self, user='raphael', password='cool-but-crude'):
         creds = {
             'username': user,
@@ -25,22 +13,32 @@ class API:
         }
         resp = requests.post(self.url+'/auth/login', json=creds)
         return resp.json()['userToken']
-
+    
+    # получить последнее айди компании
     def get_id_company(self):
         resp = requests.get(self.url + '/company')
         company_id = resp.json()
         return company_id[-1]['id']
 
+    # получить список сотрудников
     def api_get_employees_list(self, company_id):
-        resp = requests.get(self.url + '/employee' + str(company_id))
+        resp = requests.get(self.url + '/employee?company=' + str(company_id))
         return resp
 
-    def api_post_employee(self):
+    # добавить нового сотрудника
+    def api_post_employee(self, **kwargs):
         headers = {'x-client-token': self.api_get_token()}
+        body = kwargs
         resp = requests.post(self.url + '/employee',
                              headers=headers, json=body)
-        return resp
+        return resp.json()
 
+    # получить айди сотрудника
+    def api_get_id_employee(self, id):
+        resp = requests.get(self.url + '/employee/' + str(id))
+        return resp.json()
+
+    # изменить данные сотрудника
     def api_edit_employee(self, id, new_lastName, new_email, new_url, new_phone,
                           new_isActive):
         employee = {
