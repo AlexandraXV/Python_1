@@ -13,7 +13,7 @@ class API:
         }
         resp = requests.post(self.url+'/auth/login', json=creds)
         return resp.json()['userToken']
-    
+
     # получить последнее айди компании
     def get_id_company(self):
         resp = requests.get(self.url + '/company')
@@ -26,11 +26,10 @@ class API:
         return resp
 
     # добавить нового сотрудника
-    def api_post_employee(self, **kwargs):
+    def api_get_employee(self, id):
         headers = {'x-client-token': self.api_get_token()}
-        body = kwargs
-        resp = requests.post(self.url + '/employee',
-                             headers=headers, json=body)
+        resp = requests.get(self.url + '/employee/' + str(id),
+                            headers=headers)
         return resp.json()
 
     # получить айди сотрудника

@@ -31,22 +31,23 @@ class SQL:
 
     # добавить нового сотруднка
     def sql_add_new_employee(self, first_name, last_name, phone, email, company_id, is_active):
+        employee_data = {
+            "first_name": first_name,
+            'last_name': last_name,
+            'phone': phone,
+            'email': email,
+            'company_id': company_id,
+            'is_active': is_active
+        }
         with self.db.connect() as connection:
-            employee_data = {
-                'first_name': first_name,
-                'last_name': last_name,
-                'phone': phone,
-                'email': email,
-                'company_id': company_id,
-                'is_active': is_active
-            }
             rows = connection.execute(
-                text("insert into employee (first_name, last_name, phone, company_id, is_active) values (:first_name, :last_name, :phone, :company_id, :is_active)"),
+                text("insert into employee (first_name, last_name, phone, email, company_id, is_active) values (:first_name, :last_name, :phone, :email, :company_id, :is_active)"),
                 employee_data)
-        connection.commit()
-        return rows
+            connection.commit()
+            return rows
 
     # получить айди нового сотрудника
+
     def sql_get_id_employee(self):
         with self.db.connect() as connection:
             result = connection.execute(
@@ -54,27 +55,25 @@ class SQL:
             return result.fetchone()[0]
 
     # изменить данные сотрудника
-    def sql_edit_employee(self, first_name, last_name, phone, email, company_id, is_active):
+    def sql_edit_employee(self, first_name, last_name, phone, company_id, is_active, id):
+        employee_data = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'phone': phone,
+            'company_id': company_id,
+            'is_active': is_active,
+            'id': id
+        }
         with self.db.connect() as connection:
-            employee_data = {
-                'first_name': first_name,
-                'last_name': last_name,
-                'phone': phone,
-                'email': email,
-                'company_id': company_id,
-                'is_active': is_active
-            }
             result = connection.execute(
                 text("update employee set first_name =:first_name, last_name =:last_name, phone =:phone, is_active =:is_active where id =:id"),
                 employee_data
             )
             connection.commit()
-            return result.fetchall()
+            return result
 
     # delete employee
     def sql_delete_employee(self, id):
         with self.db.connect() as connection:
-            delete = {'new_id': id}
             result = connection.execute(
-                text("delete from employee where id =:new_id", delete)
-            )
+                text("delete from employee where id =:id"), {"id": id})
