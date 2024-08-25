@@ -3,6 +3,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+import allure
+
 
 class CalculatorPage:
 
@@ -12,6 +14,7 @@ class CalculatorPage:
             "https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
         self.driver.maximize_window()
 
+    @allure.step("Поиск селекторов, нажатие на кнопки")
     def test_data(self, second):
         self.driver.find_element(By.CSS_SELECTOR, "#delay").send_keys(
             Keys.BACKSPACE, second)
@@ -24,6 +27,7 @@ class CalculatorPage:
         self.driver.find_element(
             By.CSS_SELECTOR, ".btn.btn-outline-warning").click()
 
+    @allure.step("Установка времени")
     def wait(self, total):
         wait_txt = WebDriverWait(self.driver, 50)
 

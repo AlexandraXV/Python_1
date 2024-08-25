@@ -1,17 +1,18 @@
 import requests
 import psycopg2
+import allure
 
 from sqlalchemy import create_engine, text
 
 db_connect = ("postgresql://x_clients_user:95PM5lQE0NfzJWDQmLjbZ45ewrz1fLYa@dpg-cqsr9ulumphs73c2q40g-a.frankfurt-postgres.render.com/x_clients_db_fxd0")
 
-
+@allure.epic ("SQL запросы")
 class SQL:
 
     def __init__(self, connection_string):
         self.db = create_engine(connection_string)
 
-    # получить последнее айди компании
+    @allure.step("SQL. Получить последнее айди компании по фильтру")
     def sql_last_company_id(self):
         self.db = create_engine(db_connect)
         with self.db.connect() as connection:
@@ -20,7 +21,7 @@ class SQL:
             )
             return result.fetchall()
 
-    # получить список сортрудников
+    @allure.step("SQL. Получить список сортрудников по {company_id}")
     def sql_get_list_employee(self, company_id):
         with self.db.connect() as connection:
             result = connection.execute(
@@ -29,7 +30,7 @@ class SQL:
             )
             return result.fetchall()
 
-    # добавить нового сотруднка
+    @allure.step("SQL. Добавить нового сотрудника: {first_name}, {last_name}, {phone}, {email}, {company_id}, {is_active}")
     def sql_add_new_employee(self, first_name, last_name, phone, email, company_id, is_active):
         employee_data = {
             "first_name": first_name,
@@ -46,15 +47,14 @@ class SQL:
             connection.commit()
             return rows
 
-    # получить айди нового сотрудника
-
+    @allure.step("SQL. Получить id последнего сотрудника")
     def sql_get_id_employee(self):
         with self.db.connect() as connection:
             result = connection.execute(
                 text("SELECT id FROM employee ORDER BY id DESC LIMIT 1"))
             return result.fetchone()[0]
 
-    # изменить данные сотрудника
+    @allure.step("SQL. Изменить данные сотрудника: {first_name}, {last_name}, {phone}, {company_id}, {is_active}, {id}")
     def sql_edit_employee(self, first_name, last_name, phone, company_id, is_active, id):
         employee_data = {
             'first_name': first_name,
@@ -72,7 +72,7 @@ class SQL:
             connection.commit()
             return result
 
-    # delete employee
+    @allure.step("SQL. Удаление сотрудника по {id}")
     def sql_delete_employee(self, id):
         with self.db.connect() as connection:
             result = connection.execute(

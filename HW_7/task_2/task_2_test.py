@@ -1,8 +1,13 @@
 from selenium import webdriver
-
 from InfoPage import InfoPage
 
+import allure
 
+
+@allure.title("Заполнение формы")
+@allure.description("Заполнение формы значениями. Проверка работоспособности кнопки, а также на не заполненные поля.")
+@allure.severity(allure.severity_level.CRITICAL)
+@allure.feature("CREATE")
 def test_info():
     driver = webdriver.Chrome()
 
@@ -17,5 +22,5 @@ def test_info():
         "Россия",
         "QA",
         "SkyPro")
-    
+
     driver.quit()

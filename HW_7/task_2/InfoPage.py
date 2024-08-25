@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 
+import allure
+
 
 class InfoPage:
 
@@ -10,6 +12,7 @@ class InfoPage:
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
 
+    @allure.step("Поиск элементов по селекторам: {first_name}, {last_name}, {adress}, {email}, {phone}, {city}, {country}, {job_position}, {company}")
     def test_data_farm(self, first_name, last_name,
                        adress, email, phone, city, country, job_position, company):
         self.driver.find_element(
